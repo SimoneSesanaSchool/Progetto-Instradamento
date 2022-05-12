@@ -1,4 +1,4 @@
-package Eccezzioni;
+package Classi.Eccezzioni;
 
 public class NodoInesistenteException extends Exception{
 

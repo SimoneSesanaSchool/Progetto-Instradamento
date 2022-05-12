@@ -1,4 +1,4 @@
-package Nodo;
+package Classi.Nodo;
 
 /*
   La classe collegamento definisce un collegamento

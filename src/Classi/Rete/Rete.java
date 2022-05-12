@@ -1,8 +1,8 @@
-package Rete;
+package Classi.Rete;
 
-import Nodo.Nodo;
-import Nodo.Collegamento;
-import Eccezzioni.NodoInesistenteException;
+import Classi.Eccezzioni.NodoInesistenteException;
+import Classi.Nodo.Collegamento;
+import Classi.Nodo.Nodo;
 
 import java.util.ArrayList;
 
@@ -20,7 +20,7 @@ public class Rete{
       Metodo per calcolare il percorso minore
       da un nodo all'altro
     */
-    public void calcolaPercorsoMinore(String nomeNodo1, String nomeNodo2, Pacchetto p) throws NodoInesistenteException{
+    public void calcolaPercorsoMinore(String nomeNodo1, String nomeNodo2, Pacchetto p) throws NodoInesistenteException {
 
         /*
             Questo arraylist memorizza un insieme di pacchetti

@@ -1,7 +1,8 @@
-package Rete;
+package Classi.Rete;
 
-import Nodo.Nodo;
-import Eccezzioni.LoopException;
+
+import Classi.Eccezzioni.LoopException;
+import Classi.Nodo.Nodo;
 
 import java.util.ArrayList;
 

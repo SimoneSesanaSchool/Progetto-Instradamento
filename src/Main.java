@@ -1,7 +1,9 @@
-import Eccezzioni.NodoInesistenteException;
-import Rete.Pacchetto;
-import Nodo.Nodo;
-import Rete.Rete;
+
+
+import Classi.Eccezzioni.NodoInesistenteException;
+import Classi.Nodo.Nodo;
+import Classi.Rete.Pacchetto;
+import Classi.Rete.Rete;
 
 import java.util.ArrayList;
 import java.util.Scanner;
