@@ -65,14 +65,17 @@ class Main {
   //3.CALCOLO PERCORSO MINIMO FRA DUE NODI
   public static void calcoloPercorsoMinimoFraNodi(){
 
+    int ttl;
     String nome1, nome2;
     System.out.print("Inserire nome nodo di partenza: ");
     nome1 = in.next();
     System.out.print("Inserire nome nodo di arrivo: ");
     nome2 = in.next();
+    System.out.print("Inserire TTL: ");
+    ttl = in.nextInt();
 
     try{
-      rete.calcolaPercorsoMinore(nome1, nome2, new Pacchetto(2));
+      rete.calcolaPercorsoMinore(nome1, nome2, new Pacchetto(ttl));
     } catch (NodoInesistenteException e){
       System.out.println(e.getMessage());
     }
