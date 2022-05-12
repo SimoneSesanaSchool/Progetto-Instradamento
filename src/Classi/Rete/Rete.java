@@ -1,5 +1,6 @@
 package Classi.Rete;
 
+import Classi.Eccezzioni.CollegamentoGiaEsistenteException;
 import Classi.Eccezzioni.NodoInesistenteException;
 import Classi.Nodo.Collegamento;
 import Classi.Nodo.Nodo;
@@ -62,7 +63,7 @@ public class Rete{
 
 
     //Aggiunta collegameto da un nodo all'altro dati i  loro nomi
-    public void aggiungiCollegamento(String nodo1, String nodo2, int peso) throws NodoInesistenteException{
+    public void aggiungiCollegamento(String nodo1, String nodo2, int peso) throws NodoInesistenteException, CollegamentoGiaEsistenteException {
 
         Nodo n1, n2;
 

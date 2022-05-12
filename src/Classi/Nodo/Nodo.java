@@ -1,5 +1,6 @@
 package Classi.Nodo;
 
+import Classi.Eccezzioni.CollegamentoGiaEsistenteException;
 import Classi.Eccezzioni.LoopException;
 import Classi.Rete.Pacchetto;
 
@@ -26,8 +27,17 @@ public class Nodo{
 
 
   //Metodo aggiunta collegamento
-  public void aggiungiCollegamento(Collegamento c){
+  public void aggiungiCollegamento(Collegamento c) throws CollegamentoGiaEsistenteException {
+
+    //Controllo che il collegamento non sia gà presente
+    for(Collegamento t : collegamenti){
+      if(t.getNodoCollegato().getNome().equals(c.getNodoCollegato().getNome())){
+        throw new CollegamentoGiaEsistenteException();
+      }
+    }
+
     collegamenti.add(c);
+
   }
 
 

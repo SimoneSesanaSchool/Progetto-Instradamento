@@ -55,7 +55,7 @@ class Main {
 
     try {
       rete.aggiungiCollegamento(nome1, nome2, peso);
-    } catch (NodoInesistenteException e){
+    } catch (Exception e){
       System.out.println(e.getMessage());
     }
 
