@@ -72,7 +72,7 @@ class Main {
     nome2 = in.next();
 
     try{
-      rete.calcolaPercorsoMinore(nome1, nome2, new Pacchetto());
+      rete.calcolaPercorsoMinore(nome1, nome2, new Pacchetto(2));
     } catch (NodoInesistenteException e){
       System.out.println(e.getMessage());
     }

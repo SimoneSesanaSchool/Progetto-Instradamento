@@ -7,7 +7,7 @@ public class CollegamentoGiaEsistenteException extends Exception{
         un nodo inesistente all'interno di una rete
     */
     public CollegamentoGiaEsistenteException(){
-        super("Errore: collegamento già esistentes");
+        super("Errore: collegamento già esistente");
     }
 
 }

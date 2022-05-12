@@ -36,6 +36,11 @@ public class Nodo{
       }
     }
 
+    //Controllo che non si tenti di collegare il nodo a se stesso
+    if(c.getNodoCollegato().getNome().equals(this.nome)){
+      throw new CollegamentoGiaEsistenteException();
+    }
+
     collegamenti.add(c);
 
   }
@@ -78,9 +83,11 @@ public class Nodo{
         */
     	try{
           p.aggiungiNodo(this);
+          p.decrementaTTL();
         } catch (LoopException e){
           break;
         }
+
      
         //System.out.println(p);
         if(collegamenti.get(i).getNodoCollegato().getNome().equals(nomeNodo)){
@@ -108,6 +115,16 @@ public class Nodo{
       	
       	
         } else {
+
+          /*
+            Se il TTL è uguale a 0 la ricerca del percorso su questa strada
+            viene interrotta
+          */
+          if(p.getTTL() == 0){
+            p.rimuoviUltimoNodo();
+            break;
+          }
+
           p.aggiungiPeso(collegamenti.get(i).getPeso());
           collegamenti.get(i).getNodoCollegato().ricercaPercorsoMinore(nomeNodo, p, pacchetti);
         }
