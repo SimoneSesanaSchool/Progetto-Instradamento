@@ -1,7 +1,7 @@
 package Classi.Rete;
 
 
-import Classi.Eccezzioni.LoopException;
+import Classi.Eccezioni.LoopException;
 import Classi.Nodo.Nodo;
 
 import java.util.ArrayList;
@@ -10,6 +10,7 @@ public class Pacchetto implements Comparable<Pacchetto> {
 	
 	//Peso percorso
 	private int peso;
+	private ArrayList<Integer> pesi;
 
 	//Numero massimo hop (TTL)
 	private int TTL;
@@ -28,13 +29,17 @@ public class Pacchetto implements Comparable<Pacchetto> {
 	public Pacchetto(int TTL) {
 		this.peso = 0;
 		this.TTL = TTL;
+		pesi = new ArrayList<Integer>();
 	}
 	
 	//Costruttore copia
 	public Pacchetto(Pacchetto p) {
 		this.TTL = p.getTTL(); 
 		this.peso = p.getPeso();
-		this.nodi = p.getNodi();
+		for(Nodo n : p.getNodi()){
+			this.nodi.add(n);
+		}
+		pesi = new ArrayList<Integer>();
 	}
 	
 
@@ -50,16 +55,16 @@ public class Pacchetto implements Comparable<Pacchetto> {
 			}
 		}
 
+		//Viene aggiunto al pacchetto il peso del collegamento
+		try{
+			pesi.add(n.getPesoCollegamento(nodi.get(nodi.size()-1).getNome()));
+			peso = peso + n.getPesoCollegamento(nodi.get(nodi.size()-1).getNome());
+		} catch (Exception e){}
+
 		nodi.add(n);
 
 	}
-	
-	
-	//Metodo toString
-	public String toString() {
-		return "Rete.Pacchetto [peso=" + peso + ", TTL=" + TTL + ", nodi=" + nodi + "]";
-	}
-	
+
 	
 	/*
 		Questa funzione azzera il contenuto
@@ -88,22 +93,26 @@ public class Pacchetto implements Comparable<Pacchetto> {
 	*/
 	public void rimuoviUltimoNodo() {
 		try {
+
+			//Viene decrementato il peso del pacchetto
+			peso = peso - pesi.get(pesi.size()-1);
+			pesi.remove(pesi.size()-1);
+
 			nodi.remove(nodi.size()-1);
+
 		} catch (Exception e) {
 			
 		}
-	}
-	
-	//Metodo aggiunta peso
-	public void aggiungiPeso(int p) {
-		peso = peso + p;
 	}
 	
 	//Metodo per decrementare il TTL
 	public void decrementaTTL() {
 		TTL = TTL - 1;
 	}
-	
+	public void incrementaTTL() {
+		TTL = TTL + 1;
+	}
+
 	//Metodi getters/setters
 	public int getTTL() {
 		return TTL;
@@ -113,12 +122,14 @@ public class Pacchetto implements Comparable<Pacchetto> {
 		return peso;
 	}
 
-	public void setTTL(int tTL) {
-		TTL = tTL;
-	}
-
 	public ArrayList<Nodo> getNodi() {
 		return nodi;
 	}
-		
+
+
+	//Metodo toString
+	public String toString() {
+		return "Peso: " + peso + ", TTL: " + TTL + ", Salti: " + nodi;
+	}
+
 }

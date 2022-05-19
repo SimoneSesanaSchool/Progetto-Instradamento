@@ -1,10 +1,13 @@
 package Classi.Rete;
 
-import Classi.Eccezzioni.CollegamentoGiaEsistenteException;
-import Classi.Eccezzioni.NodoInesistenteException;
+import Classi.Eccezioni.CollegamentoGiaEsistenteException;
+import Classi.Eccezioni.NodoInesistenteException;
 import Classi.Nodo.Collegamento;
 import Classi.Nodo.Nodo;
+import javafx.scene.control.TextArea;
+import javafx.scene.shape.Line;
 
+import javax.xml.soap.Text;
 import java.util.ArrayList;
 
 /*
@@ -21,7 +24,7 @@ public class Rete{
       Metodo per calcolare il percorso minore
       da un nodo all'altro
     */
-    public void calcolaPercorsoMinore(String nomeNodo1, String nomeNodo2, Pacchetto p) throws NodoInesistenteException {
+    public ArrayList<Pacchetto> calcolaPercorsoMinore(String nomeNodo1, String nomeNodo2, Pacchetto p, TextArea log) throws NodoInesistenteException {
 
         /*
             Questo arraylist memorizza un insieme di pacchetti
@@ -32,11 +35,41 @@ public class Rete{
         */
         ArrayList<Pacchetto> pacchetti = new ArrayList<Pacchetto>();
 
-        this.ricercaNodo(nomeNodo1).ricercaPercorsoMinore(nomeNodo2, p, pacchetti);
+        this.ricercaNodo(nomeNodo1).ricercaPercorsoMinore(nomeNodo2, p, pacchetti, log);
 
-        for(int i = 0; i < pacchetti.size(); i++) {
-             System.out.println(pacchetti.get(i));
+        return pacchetti;
+
+    }
+
+
+    /*
+        Metodo per il calcolo dell'albero dei cammini minimi
+    */
+    public ArrayList<Pacchetto> calcolaGrafoCamminiMinimi(String nodoPartenza, TextArea log) {
+
+        //Lista percorsi minimi dal nodo di partenza
+        ArrayList<Pacchetto> percorsiMinimi = new ArrayList<Pacchetto>();
+
+        for(Nodo n : nodi){
+            if(!n.getNome().equals(nodoPartenza)){
+                try{
+
+                    ArrayList<Pacchetto> t = calcolaPercorsoMinore(nodoPartenza, n.getNome(), new Pacchetto(20), log);
+                    Pacchetto minore = t.get(0);
+
+                    //Si cerca il percorso minore
+                    for(Pacchetto p : t){
+                        if(p.getPeso() < minore.getPeso()){
+                            minore = p;
+                        }
+                    }
+                    percorsiMinimi.add(minore);
+
+                } catch (Exception e){}
+            }
         }
+
+        return percorsiMinimi;
 
     }
 
@@ -61,25 +94,39 @@ public class Rete{
       nodi.add(n);
     }
 
+    //Rimozione nodo
+    public void rimuoviNodo(String nome){
 
-    //Aggiunta collegameto da un nodo all'altro dati i  loro nomi
-    public void aggiungiCollegamento(String nodo1, String nodo2, int peso) throws NodoInesistenteException, CollegamentoGiaEsistenteException {
+        //Il nodo viene rimosso dai collegamenti
+        for(Nodo n : nodi){
+            for(int i = 0; i < n.getCollegamenti().size(); i++){
+                if(n.getCollegamenti().get(i).getNodoCollegato().getNome().equals(nome)){
+                    n.getCollegamenti().remove(i);
+                }
+            }
+        }
 
-        Nodo n1, n2;
-
-        //Ricerca dei due nodi
-        n1 = this.ricercaNodo(nodo1);
-        n2 = this.ricercaNodo(nodo2);
-
-        //Aggiunta del collegamento
-        n1.aggiungiCollegamento(new Collegamento(peso, n2));
+        //Il nodo viene rimosso dalla rete
+        for(int i = 0; i < nodi.size(); i++){
+            if(nodi.get(i).getNome().equals(nome)){
+                nodi.remove(i);
+            }
+        }
 
     }
 
 
-    //Metodo che restituisce un ArrayList contenente i nodi della rete
-    public ArrayList<Nodo> getNodi(){
-      return nodi;
+    //Aggiunta collegameto da un nodo all'altro dati i  loro nomi
+    public void aggiungiCollegamento(String nodo1, String nodo2, int peso, Line linea) throws NodoInesistenteException, CollegamentoGiaEsistenteException {
+
+        //Aggiunta dei collegamenti fra i due nodi
+        this.ricercaNodo(nodo1).aggiungiCollegamento(new Collegamento(peso, this.ricercaNodo(nodo2), linea));
+
+    }
+
+    //Metodi getters/setters
+    public ArrayList<Nodo> getNodi() {
+        return nodi;
     }
 
 }

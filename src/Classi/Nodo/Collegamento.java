@@ -1,5 +1,7 @@
 package Classi.Nodo;
 
+import javafx.scene.shape.Line;
+
 /*
   La classe collegamento definisce un collegamento
   fra due nodi. Gli attributi di questa classe sono
@@ -11,20 +13,38 @@ public class Collegamento{
     private int peso;
     private Nodo nodoCollegato;
 
+    //Rappresentazione grafica del collegamento
+    private Line linea;
+
+
     //Costruttore
     public Collegamento(int peso, Nodo nodoCollegato){
       this.peso = peso;
       this.nodoCollegato = nodoCollegato;
     }
 
-    //Get nodo
+    //Costruttore
+    public Collegamento(int peso, Nodo nodoCollegato, Line linea){
+        this.peso = peso;
+        this.linea = linea;
+        this.nodoCollegato = nodoCollegato;
+    }
+
+    //Metodi getters/setters
     public Nodo getNodoCollegato(){
       return nodoCollegato;
     }
     
-    //Get peso
     public int getPeso() {
     	return peso;
+    }
+
+    public Line getLinea() {
+        return linea;
+    }
+
+    public void setLinea(Line linea) {
+        this.linea = linea;
     }
 
     //toString
